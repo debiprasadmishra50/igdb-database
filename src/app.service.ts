@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './test/user.entity';
 import * as fs from 'fs';
-import { Photo } from './test/photo.entity';
 import { Game } from './entities/game.entity';
 import { AgeRating } from './entities/age-rating.entity';
 import { AlternativeNames } from './entities/alternative-names.entity';
@@ -23,7 +21,6 @@ import { Themes } from './entities/themes.entity';
 import { Website } from './entities/website.entity';
 import { ArtWorks } from './entities/artworks.entity';
 import { Video } from './entities/video.entity';
-import e from 'express';
 
 @Injectable()
 export class AppService {
@@ -186,7 +183,7 @@ export class AppService {
     // const g = await this.gameRepository.findOne({ where: { id: 624 } });
     // console.log(await g.similar_games);
 
-    // return (await this.gameRepository.find()).length;
+    return (await this.gameRepository.find()).length;
   }
 
   async addVideos(data: any[]) {

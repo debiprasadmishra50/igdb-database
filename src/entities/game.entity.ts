@@ -20,7 +20,6 @@ import { GameEngines } from './game-engines.entity';
 import { GameModes } from './game-modes.entity';
 import { Genres } from './genres.entity';
 import { InvolvedCompanies } from './involved-companies.entity';
-import { ParentGame } from './parent-game.entity';
 import { Platforms } from './platforms.entity';
 import { PlayerPerspectives } from './player-perspective.entity';
 import { ReleaseDates } from './release-dates.entity';

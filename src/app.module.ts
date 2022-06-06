@@ -16,7 +16,6 @@ import { GameModes } from './entities/game-modes.entity';
 import { Game } from './entities/game.entity';
 import { Genres } from './entities/genres.entity';
 import { InvolvedCompanies } from './entities/involved-companies.entity';
-import { ParentGame } from './entities/parent-game.entity';
 import { Platforms } from './entities/platforms.entity';
 import { PlayerPerspectives } from './entities/player-perspective.entity';
 import { ReleaseDates } from './entities/release-dates.entity';
@@ -66,7 +65,6 @@ import { User } from './test/user.entity';
       GameModes,
       Genres,
       InvolvedCompanies,
-      // ParentGame,
       Platforms,
       PlayerPerspectives,
       ReleaseDates,
