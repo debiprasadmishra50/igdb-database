@@ -155,7 +155,7 @@ export class Game {
   @OneToMany(() => Themes, (themes) => themes.game, { nullable: true, eager: true })
   themes: Themes[];
 
-  @Column('decimal', {})
+  @Column('decimal', { nullable: true })
   total_rating: number;
 
   @Column({ nullable: true })

@@ -10,7 +10,7 @@ export class GameEngines {
   created_at: number;
 
   // TODO: change this to entity relation
-  @Column('int', { array: true })
+  @Column('int', { nullable: true, array: true })
   companies: number[];
 
   @ManyToOne(() => Game, (game) => game.game_engines, { lazy: true })
@@ -23,7 +23,7 @@ export class GameEngines {
   name: string;
 
   // TODO: change this to entity relation
-  @Column('int', { array: true })
+  @Column('int', { nullable: true, array: true })
   platforms: number;
 
   @Column({ nullable: true })

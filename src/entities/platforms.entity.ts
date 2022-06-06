@@ -36,9 +36,9 @@ export class Platforms {
   @Column({ nullable: true })
   url: string;
 
-  @Column('int', { array: true })
+  @Column('int', { array: true, nullable: true })
   versions: number[];
 
-  @Column('int', { array: true })
+  @Column('int', { array: true, nullable: true })
   websites: number[];
 }

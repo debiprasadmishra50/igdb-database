@@ -23,6 +23,7 @@ import { Themes } from './entities/themes.entity';
 import { Website } from './entities/website.entity';
 import { ArtWorks } from './entities/artworks.entity';
 import { Video } from './entities/video.entity';
+import e from 'express';
 
 @Injectable()
 export class AppService {
@@ -58,127 +59,134 @@ export class AppService {
   ) {}
 
   async addIGDBGamesData() {
-    // const records = this.readDirectory();
+    const records = this.readDirectory();
 
-    // for (let i = 0; i < 1; i++) {
-    // const filePath = `${this.path}/${records[this.random(0, records.length)]}`;
-    const filePath = `${this.path}/call-of-duty-united-offensive.json`;
-    let data = this.readFile(filePath);
-    data = JSON.parse(data);
+    for (let i = 0; i < 2; i++) {
+      const filePath = `${this.path}/${records[this.random(0, records.length)]}`;
+      // const filePath = `${this.path}/call-of-duty-united-offensive.json`;
+      let data = this.readFile(filePath);
+      data = JSON.parse(data);
 
-    const game = new Game();
-    game.id = data['id'];
-    game.name = data['name'];
-    game.aggregated_rating = data['aggregated_rating'];
-    game.aggregated_rating_count = data['aggregated_rating_count'];
-    game.category = data['category'];
-    game.created_at = data['created_at'];
-    game.first_release_date = data['first_release_date'];
-    game.follows = data['follows'];
-    game.hypes = data['hypes'];
-    game.multiplayer_modes = data['multiplayer_modes'];
-    game.rating = data['rating'];
-    game.rating_count = data['rating_count'];
-    game.slug = data['slug'];
-    game.status = data['status'];
-    game.storyline = data['storyline'];
-    game.summary = data['summary'];
-    game.total_rating = data['total_rating'];
-    game.total_rating_count = data['total_rating_count'];
-    game.updated_at = data['updated_at'];
-    game.url = data['url'];
+      console.log('//////////////////////', data['id'], '///////////////////');
 
-    await this.gameRepository.save(game);
+      const game = new Game();
+      game.id = data['id'];
+      game.name = data['name'];
+      game.aggregated_rating = data['aggregated_rating'];
+      game.aggregated_rating_count = data['aggregated_rating_count'];
+      game.category = data['category'];
+      game.created_at = data['created_at'];
+      game.first_release_date = data['first_release_date'];
+      game.follows = data['follows'];
+      game.hypes = data['hypes'];
+      game.rating = data['rating'];
+      game.rating_count = data['rating_count'];
+      game.slug = data['slug'];
+      game.status = data['status'];
+      game.storyline = data['storyline'];
+      game.summary = data['summary'];
+      game.total_rating = data['total_rating'];
+      game.total_rating_count = data['total_rating_count'];
+      game.updated_at = data['updated_at'];
+      game.url = data['url'];
 
-    if (data['age_ratings']) {
-      game.age_ratings = await this.addAgeRating(data['age_ratings'], data['id']);
+      await this.gameRepository.save(game);
+
+      if (data['age_ratings']) {
+        game.age_ratings = await this.addAgeRating(data['age_ratings'], data['id']);
+      }
+
+      if (data['alternative_names']) {
+        game.alternative_names = await this.addAlternativeNames(data['alternative_names'], data['id']);
+      }
+
+      if (data['artworks']) {
+        game.artworks = await this.addArtworks(data['artworks']);
+      }
+
+      if (data['collection']) game.collection = await this.addCollection(data['collection']);
+      if (data['cover']) game.cover = await this.addCover(data['cover']);
+      if (data['dlcs']) game.dlcsId = data['dlcs'].map((d) => d.id);
+
+      if (data['external_games']) {
+        game.external_games = await this.addExternalGames(data['external_games']);
+      }
+
+      if (data['franchise']) {
+        game.franchise = await this.addFranchises([data['franchise']])[0];
+      }
+
+      if (data['franchises']) {
+        game.franchises = await this.addFranchises(data['franchises']);
+      }
+
+      if (data['game_engines']) {
+        game.game_engines = await this.addGameEngines(data['game_engines']);
+      }
+
+      if (data['game_modes']) {
+        game.game_modes = await this.addGameModes(data['game_modes']);
+      }
+
+      if (data['genres']) {
+        game.genres = await this.addGenres(data['genres']);
+      }
+
+      if (data['involved_companies']) {
+        game.involved_companies = await this.addInvolvedCompanies(data['involved_companies']);
+      }
+
+      if (data['multiplayer_modes']) {
+        game.multiplayer_modes = data['multiplayer_modes'].map((mode) => mode.id);
+      }
+
+      if (data['parent_game'])
+        // TODO: parent_game
+        game.parent_game = data['parent_game'];
+
+      if (data['platforms']) {
+        game.platforms = await this.addPlatforms(data['platforms']);
+      }
+
+      if (data['player_perspectives']) {
+        game.player_perspectives = await this.addPlayerPerspective(data['player_perspectives']);
+      }
+
+      if (data['release_dates']) {
+        game.release_dates = await this.addReleaseDates(data['release_dates']);
+      }
+
+      if (data['screenshots']) {
+        game.screenshots = await this.addScreenshots(data['screenshots']);
+      }
+
+      // TODO: similar games
+      if (data['similar_games']) {
+        game.similar_games = data['similar_games'].map((game) => game.id);
+      }
+
+      if (data['themes']) {
+        game.themes = await this.addThemes(data['themes'], game);
+      }
+
+      if (data['videos']) {
+        game.videos = await this.addVideos(data['videos']);
+      }
+
+      if (data['websites']) {
+        game.websites = await this.addWebsites(data['websites']);
+      }
+
+      await this.gameRepository.save(game);
     }
-
-    if (data['alternative_names']) {
-      game.alternative_names = await this.addAlternativeNames(data['alternative_names'], data['id']);
-    }
-
-    if (data['artworks']) {
-      game.artworks = await this.addArtworks(data['artworks']);
-    }
-
-    if (data['collection']) game.collection = await this.addCollection(data['collection']);
-    if (data['cover']) game.cover = await this.addCover(data['cover']);
-    if (data['dlcs']) game.dlcsId = data['dlcs'].map((d) => d.id);
-
-    if (data['external_games']) {
-      game.external_games = await this.addExternalGames(data['external_games']);
-    }
-
-    if (data['franchise']) {
-      game.franchise = await this.addFranchises([data['franchises']])[0];
-    }
-
-    if (data['franchises']) {
-      game.franchises = await this.addFranchises(data['franchises']);
-    }
-
-    if (data['game_engines']) {
-      game.game_engines = await this.addGameEngines(data['game_engines']);
-    }
-
-    if (data['game_modes']) {
-      game.game_modes = await this.addGameModes(data['game_modes']);
-    }
-
-    if (data['genres']) {
-      game.genres = await this.addGenres(data['genres']);
-    }
-
-    if (data['involved_companies']) {
-      game.involved_companies = await this.addInvolvedCompanies(data['involved_companies']);
-    }
-
-    // TODO: parent_game
-    if (data['parent_game']) game.parent_game = data['parent_game'];
-
-    if (data['platforms']) {
-      game.platforms = await this.addPlatforms(data['platforms']);
-    }
-
-    if (data['player_perspectives']) {
-      game.player_perspectives = await this.addPlayerPerspective(data['player_perspectives']);
-    }
-
-    if (data['release_dates']) {
-      game.release_dates = await this.addReleaseDates(data['release_dates']);
-    }
-
-    if (data['screenshots']) {
-      game.screenshots = await this.addScreenshots(data['screenshots']);
-    }
-
-    // TODO: similar games
-    if (data['similar_games']) {
-      game.similar_games = data['similar_games'].map((game) => game.id);
-    }
-
-    if (data['themes']) {
-      game.themes = await this.addThemes(data['themes'], game);
-    }
-
-    if (data['videos']) {
-      game.videos = await this.addVideos(data['videos']);
-    }
-
-    if (data['websites']) {
-      game.websites = await this.addWebsites(data['websites']);
-    }
-
-    await this.gameRepository.save(game);
-    // }
 
     await this.wait(2);
-    console.log(await this.gameRepository.find());
+    console.log('awesome: ', (await this.gameRepository.find()).length);
+    // global.gc();
     // const g = await this.gameRepository.findOne({ where: { id: 624 } });
     // console.log(await g.similar_games);
 
-    // return await this.gameRepository.find();
+    // return (await this.gameRepository.find()).length;
   }
 
   async addVideos(data: any[]) {
