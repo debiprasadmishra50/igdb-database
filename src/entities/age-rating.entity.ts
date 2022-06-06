@@ -13,10 +13,10 @@ export class AgeRating {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   category: number;
 
-  @Column({})
+  @Column({ nullable: true })
   rating: number;
 
   @ManyToOne(() => Game, (game) => game.age_ratings, { lazy: true })

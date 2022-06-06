@@ -1,6 +1,17 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { AgeRating } from './age-rating.entity';
 import { AlternativeNames } from './alternative-names.entity';
+import { ArtWorks } from './artworks.entity';
 import { Collection } from './collection.entity';
 import { Cover } from './cover.entity';
 import { ExternalGames } from './external-games.entity';
@@ -15,6 +26,8 @@ import { PlayerPerspectives } from './player-perspective.entity';
 import { ReleaseDates } from './release-dates.entity';
 import { Screenshots } from './screenshot.entity';
 import { Themes } from './themes.entity';
+import { Video } from './video.entity';
+import { Website } from './website.entity';
 
 @Entity()
 export class Game {
@@ -33,6 +46,13 @@ export class Game {
   @OneToMany(() => AlternativeNames, (names) => names.game, { nullable: true, eager: true })
   alternative_names: AlternativeNames[];
 
+  @OneToMany(() => ArtWorks, (work) => work.game, { nullable: true, eager: true })
+  artworks: ArtWorks[];
+
+  @ManyToMany(() => Game, { nullable: true, lazy: true })
+  @JoinTable()
+  bundles: number[];
+
   @Column({ nullable: true })
   category: number;
 
@@ -46,6 +66,14 @@ export class Game {
   @Column({ nullable: true })
   created_at: number;
 
+  // TODO: dlcs, expanded_games, expansions
+  @ManyToMany(() => Game, { nullable: true, lazy: true })
+  @JoinTable()
+  dlcs: number[];
+
+  @Column('int', { array: true, nullable: true })
+  dlcsId: number[];
+
   @OneToMany(() => ExternalGames, (exGames) => exGames.game, { nullable: true, eager: true })
   external_games: ExternalGames[];
 
@@ -54,6 +82,9 @@ export class Game {
 
   @Column({ nullable: true })
   follows: number;
+
+  @ManyToOne(() => Franchises, { nullable: true, eager: true })
+  franchise: Franchises;
 
   @OneToMany(() => Franchises, (franchises) => franchises.game, { nullable: true, eager: true })
   franchises: Franchises[];
@@ -67,14 +98,21 @@ export class Game {
   @OneToMany(() => Genres, (genres) => genres.game, { nullable: true, eager: true })
   genres: Genres[];
 
+  @Column({ nullable: true })
+  hypes: number;
+
   @OneToMany(() => InvolvedCompanies, (inCompanies) => inCompanies.game, { nullable: true, eager: true })
   involved_companies: InvolvedCompanies[];
 
-  @ManyToOne(() => ParentGame, (parent) => parent.game, { nullable: true, eager: true })
-  parent_game: ParentGame;
+  // multiplayer_modes
+  @Column('int', { array: true, nullable: true })
+  multiplayer_modes: number[];
 
   @Column({ nullable: true })
   name: string;
+
+  @ManyToOne(() => Game, { nullable: true, lazy: true, createForeignKeyConstraints: false })
+  parent_game: number;
 
   @OneToMany(() => Platforms, (platform) => platform.game, { nullable: true, eager: true })
   platforms: Platforms[];
@@ -91,15 +129,47 @@ export class Game {
   @OneToMany(() => ReleaseDates, (releaseDate) => releaseDate.game, { nullable: true, eager: true })
   release_dates: ReleaseDates[];
 
+  // remakes, remasters
+
   @OneToMany(() => Screenshots, (shots) => shots.game, { nullable: true, eager: true })
   screenshots: Screenshots[];
 
-  @Column({})
+  @ManyToMany(() => Game, { nullable: true, lazy: true })
+  @JoinTable()
+  similar_games: number[];
+
+  @Column({ nullable: true })
   slug: string;
 
-  @Column({})
+  // standalone_expansions
+
+  @Column({ nullable: true })
+  status: number;
+
+  @Column({ nullable: true })
+  storyline: string;
+
+  @Column({ nullable: true })
   summary: string;
 
   @OneToMany(() => Themes, (themes) => themes.game, { nullable: true, eager: true })
   themes: Themes[];
+
+  @Column('decimal', {})
+  total_rating: number;
+
+  @Column({ nullable: true })
+  total_rating_count: number;
+
+  @Column({ nullable: true })
+  updated_at: number;
+
+  @Column({ nullable: true })
+  url: string;
+
+  @OneToMany(() => Video, (video) => video.game, { nullable: true, eager: true })
+  videos: Video[];
+
+  @OneToMany(() => Website, (website) => website.game, { nullable: true, eager: true })
+  websites: Website[];
 }

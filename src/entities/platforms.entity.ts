@@ -6,34 +6,34 @@ export class Platforms {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   abbreviation: string;
 
-  @Column({})
+  @Column({ nullable: true })
   alternative_name: string;
 
-  @Column({})
+  @Column({ nullable: true })
   category: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
   @ManyToOne(() => Game, (game) => game.platforms, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
-  @Column({})
+  @Column({ nullable: true })
   platform_logo: number;
 
-  @Column({})
+  @Column({ nullable: true })
   slug: string;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 
-  @Column({})
+  @Column({ nullable: true })
   url: string;
 
   @Column('int', { array: true })

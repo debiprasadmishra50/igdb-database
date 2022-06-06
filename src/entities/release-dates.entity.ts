@@ -7,33 +7,33 @@ export class ReleaseDates {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   category: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
-  @Column({})
+  @Column({ nullable: true })
   date: number;
 
   @ManyToOne(() => Game, (game) => game.release_dates, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   human: string;
 
-  @Column({})
+  @Column({ nullable: true })
   m: number;
 
   @ManyToOne(() => Platforms, { nullable: true, lazy: true })
   platform: Platforms;
 
-  @Column({})
+  @Column({ nullable: true })
   region: number;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 
-  @Column({})
+  @Column({ nullable: true })
   y: number;
 }

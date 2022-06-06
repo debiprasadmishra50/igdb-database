@@ -6,27 +6,27 @@ export class InvolvedCompanies {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   company: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
-  @Column({})
+  @Column({ nullable: true })
   developer: boolean;
 
   @ManyToOne(() => Game, (game) => game.involved_companies, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   porting: boolean;
 
-  @Column({})
+  @Column({ nullable: true })
   publisher: boolean;
 
-  @Column({})
+  @Column({ nullable: true })
   supporting: boolean;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 }

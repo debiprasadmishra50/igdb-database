@@ -12,7 +12,7 @@ export class Photo {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   url: string;
 
   @ManyToOne(() => User, (user) => user.photos, { lazy: true })

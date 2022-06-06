@@ -6,21 +6,21 @@ export class ExternalGames {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   category: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
   @ManyToOne(() => Game, (game) => game.external_games, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
-  @Column({})
+  @Column({ nullable: true })
   uid: string;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 }

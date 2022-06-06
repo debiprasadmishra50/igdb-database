@@ -22,7 +22,7 @@ export class User {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
   @OneToMany(() => Photo, (photo) => photo.user, { eager: true })

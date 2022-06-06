@@ -17,10 +17,10 @@ export class ParentGame {
   @OneToMany(() => Game, (rating) => rating.age_ratings, { nullable: true, lazy: true })
   age_ratings: number[];
 
-  @Column({})
+  @Column({ nullable: true })
   aggregrated_rating: number;
 
-  @Column({})
+  @Column({ nullable: true })
   aggregrated_rating_count: number;
 
   @OneToMany(() => Game, (names) => names.alternative_names, { nullable: true, lazy: true })
@@ -29,17 +29,17 @@ export class ParentGame {
   // @OneToMany(() => Game, (art) => art.artworks, { nullable: true, lazy: true })
   // artworks: number[];
 
-  @Column({})
+  @Column({ nullable: true })
   category: number;
 
-  @Column({})
+  @Column({ nullable: true })
   collection: number;
 
   @OneToOne(() => Cover, (cover) => cover.game, { nullable: true, lazy: true })
   @JoinColumn()
   cover: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
   // @OneToMany(() => Expansions, (expansions) => expansions.game, { nullable: true, lazy: true })
@@ -48,10 +48,10 @@ export class ParentGame {
   @OneToMany(() => ExternalGames, (externalGames) => externalGames.game, { nullable: true, lazy: true })
   external_games: number[];
 
-  @Column({})
+  @Column({ nullable: true })
   first_release_date: number;
 
-  @Column({})
+  @Column({ nullable: true })
   follows: number;
 
   @OneToMany(() => Franchises, (franchises) => franchises.game, { nullable: true, lazy: true })
@@ -69,28 +69,28 @@ export class ParentGame {
   @OneToMany(() => InvolvedCompanies, (inCompanies) => inCompanies.game, { nullable: true, eager: true })
   involved_companies: InvolvedCompanies[];
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
   // TODO:
   @OneToMany(() => Platforms, (platform) => platform.game, { nullable: true, eager: true })
   platforms: Platforms[];
 
-  @Column({})
+  @Column({ nullable: true })
   developer: boolean;
 
   @OneToMany(() => Game, (game) => game.parent_game, { nullable: true, lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   porting: boolean;
 
-  @Column({})
+  @Column({ nullable: true })
   publisher: boolean;
 
-  @Column({})
+  @Column({ nullable: true })
   supporting: boolean;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 }

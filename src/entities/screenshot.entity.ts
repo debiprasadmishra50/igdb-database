@@ -9,15 +9,15 @@ export class Screenshots {
   @ManyToOne(() => Game, (game) => game.release_dates, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   height: number;
 
-  @Column({})
+  @Column({ nullable: true })
   image_id: string;
 
-  @Column({})
+  @Column({ nullable: true })
   url: string;
 
-  @Column({})
+  @Column({ nullable: true })
   width: number;
 }

@@ -13,10 +13,10 @@ export class AlternativeNames {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   comment: string;
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
   @ManyToOne(() => Game, (game) => game.alternative_names, { lazy: true })

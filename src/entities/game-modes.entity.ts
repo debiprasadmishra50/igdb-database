@@ -6,21 +6,21 @@ export class GameModes {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
   @ManyToOne(() => Game, (game) => game.game_modes, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
-  @Column({})
+  @Column({ nullable: true })
   slug: string;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 
-  @Column({})
+  @Column({ nullable: true })
   url: string;
 }

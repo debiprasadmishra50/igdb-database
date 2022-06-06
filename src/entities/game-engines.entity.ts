@@ -6,7 +6,7 @@ export class GameEngines {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
   // TODO: change this to entity relation
@@ -16,22 +16,22 @@ export class GameEngines {
   @ManyToOne(() => Game, (game) => game.game_engines, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   logo: 21;
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
   // TODO: change this to entity relation
   @Column('int', { array: true })
   platforms: number;
 
-  @Column({})
+  @Column({ nullable: true })
   slug: string;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 
-  @Column({})
+  @Column({ nullable: true })
   url: string;
 }

@@ -20,6 +20,9 @@ import { PlayerPerspectives } from './entities/player-perspective.entity';
 import { ReleaseDates } from './entities/release-dates.entity';
 import { Screenshots } from './entities/screenshot.entity';
 import { Themes } from './entities/themes.entity';
+import { Website } from './entities/website.entity';
+import { ArtWorks } from './entities/artworks.entity';
+import { Video } from './entities/video.entity';
 
 @Injectable()
 export class AppService {
@@ -35,6 +38,7 @@ export class AppService {
     @InjectRepository(Game) private readonly gameRepository: Repository<Game>,
     @InjectRepository(AgeRating) private readonly ageRatingRepository: Repository<AgeRating>,
     @InjectRepository(AlternativeNames) private readonly alterNamesRepository: Repository<AlternativeNames>,
+    @InjectRepository(ArtWorks) private readonly artworksRepository: Repository<ArtWorks>,
     @InjectRepository(Collection) private readonly collectionRepository: Repository<AlternativeNames>,
     @InjectRepository(Cover) private readonly coverRepository: Repository<Cover>,
     @InjectRepository(ExternalGames) private readonly externalGamesRepository: Repository<ExternalGames>,
@@ -49,6 +53,8 @@ export class AppService {
     @InjectRepository(ReleaseDates) private readonly releaseDatesRepository: Repository<ReleaseDates>,
     @InjectRepository(Screenshots) private readonly screenshotsRepository: Repository<Screenshots>,
     @InjectRepository(Themes) private readonly themesRepository: Repository<Themes>,
+    @InjectRepository(Video) private readonly videoRepository: Repository<Video>,
+    @InjectRepository(Website) private readonly websiteRepository: Repository<Website>,
   ) {}
 
   async addIGDBGamesData() {
@@ -69,10 +75,18 @@ export class AppService {
     game.created_at = data['created_at'];
     game.first_release_date = data['first_release_date'];
     game.follows = data['follows'];
+    game.hypes = data['hypes'];
+    game.multiplayer_modes = data['multiplayer_modes'];
     game.rating = data['rating'];
     game.rating_count = data['rating_count'];
     game.slug = data['slug'];
+    game.status = data['status'];
+    game.storyline = data['storyline'];
     game.summary = data['summary'];
+    game.total_rating = data['total_rating'];
+    game.total_rating_count = data['total_rating_count'];
+    game.updated_at = data['updated_at'];
+    game.url = data['url'];
 
     await this.gameRepository.save(game);
 
@@ -84,11 +98,20 @@ export class AppService {
       game.alternative_names = await this.addAlternativeNames(data['alternative_names'], data['id']);
     }
 
+    if (data['artworks']) {
+      game.artworks = await this.addArtworks(data['artworks']);
+    }
+
     if (data['collection']) game.collection = await this.addCollection(data['collection']);
     if (data['cover']) game.cover = await this.addCover(data['cover']);
+    if (data['dlcs']) game.dlcsId = data['dlcs'].map((d) => d.id);
 
     if (data['external_games']) {
       game.external_games = await this.addExternalGames(data['external_games']);
+    }
+
+    if (data['franchise']) {
+      game.franchise = await this.addFranchises([data['franchises']])[0];
     }
 
     if (data['franchises']) {
@@ -112,6 +135,7 @@ export class AppService {
     }
 
     // TODO: parent_game
+    if (data['parent_game']) game.parent_game = data['parent_game'];
 
     if (data['platforms']) {
       game.platforms = await this.addPlatforms(data['platforms']);
@@ -129,19 +153,79 @@ export class AppService {
       game.screenshots = await this.addScreenshots(data['screenshots']);
     }
 
+    // TODO: similar games
+    if (data['similar_games']) {
+      game.similar_games = data['similar_games'].map((game) => game.id);
+    }
+
     if (data['themes']) {
       game.themes = await this.addThemes(data['themes'], game);
+    }
+
+    if (data['videos']) {
+      game.videos = await this.addVideos(data['videos']);
+    }
+
+    if (data['websites']) {
+      game.websites = await this.addWebsites(data['websites']);
     }
 
     await this.gameRepository.save(game);
     // }
 
     await this.wait(2);
-    // console.log(await this.gameRepository.find());
-    const g = await this.gameRepository.findOne({ where: { id: 624 } });
-    console.log(await g.themes);
+    console.log(await this.gameRepository.find());
+    // const g = await this.gameRepository.findOne({ where: { id: 624 } });
+    // console.log(await g.similar_games);
 
     // return await this.gameRepository.find();
+  }
+
+  async addVideos(data: any[]) {
+    const allVideos = data.map((el) => {
+      const video = new Video();
+      video.id = el.id;
+      video.game = el.game;
+      video.name = el.name;
+      video.video_id = el.video_id;
+
+      return this.videoRepository.save(video);
+    });
+
+    return await Promise.all(allVideos);
+  }
+
+  async addArtworks(data: any[]) {
+    const works = data.map((el) => {
+      const work = new ArtWorks();
+      work.id = el.id;
+      work.alpha_channel = el.alpha_channel;
+      work.animated = el.animated;
+      work.game = el.game;
+      work.height = el.height;
+      work.image_id = el.image_id;
+      work.url = el.url;
+      work.width = el.width;
+
+      return this.artworksRepository.save(work);
+    });
+
+    return await Promise.all(works);
+  }
+
+  async addWebsites(data: any[]) {
+    const allSites = data.map((el) => {
+      const site = new Website();
+      site.id = el.id;
+      site.category = el.category;
+      site.game = el.game;
+      site.trusted = el.trusted;
+      site.url = el.url;
+
+      return this.websiteRepository.save(site);
+    });
+
+    return await Promise.all(allSites);
   }
 
   async addThemes(data: any[], game: Game) {

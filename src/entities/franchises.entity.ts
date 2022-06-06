@@ -6,7 +6,7 @@ export class Franchises {
   @PrimaryColumn()
   id: number;
 
-  @Column({})
+  @Column({ nullable: true })
   created_at: number;
 
   @Column('integer', { array: true })
@@ -15,15 +15,15 @@ export class Franchises {
   @ManyToOne(() => Game, (game) => game.franchises, { lazy: true })
   game: Game;
 
-  @Column({})
+  @Column({ nullable: true })
   name: string;
 
-  @Column({})
+  @Column({ nullable: true })
   slug: string;
 
-  @Column({})
+  @Column({ nullable: true })
   updated_at: number;
 
-  @Column({})
+  @Column({ nullable: true })
   url: string;
 }

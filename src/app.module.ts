@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { DemoService } from './demo.service';
 import { AgeRating } from './entities/age-rating.entity';
 import { AlternativeNames } from './entities/alternative-names.entity';
+import { ArtWorks } from './entities/artworks.entity';
 import { Collection } from './entities/collection.entity';
 import { Cover } from './entities/cover.entity';
 import { ExternalGames } from './entities/external-games.entity';
@@ -21,6 +22,8 @@ import { PlayerPerspectives } from './entities/player-perspective.entity';
 import { ReleaseDates } from './entities/release-dates.entity';
 import { Screenshots } from './entities/screenshot.entity';
 import { Themes } from './entities/themes.entity';
+import { Video } from './entities/video.entity';
+import { Website } from './entities/website.entity';
 import { Photo } from './test/photo.entity';
 import { User } from './test/user.entity';
 
@@ -44,7 +47,7 @@ import { User } from './test/user.entity';
           autoLoadEntities: true,
           synchronize: true,
           retryAttempts: 2,
-          dropSchema: true,
+          // dropSchema: true,
         };
       },
     }),
@@ -54,6 +57,7 @@ import { User } from './test/user.entity';
       Game,
       AgeRating,
       AlternativeNames,
+      ArtWorks,
       Collection,
       Cover,
       ExternalGames,
@@ -62,12 +66,14 @@ import { User } from './test/user.entity';
       GameModes,
       Genres,
       InvolvedCompanies,
-      ParentGame,
+      // ParentGame,
       Platforms,
       PlayerPerspectives,
       ReleaseDates,
       Screenshots,
       Themes,
+      Video,
+      Website,
     ]),
   ],
   controllers: [AppController],
