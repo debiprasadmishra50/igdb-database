@@ -63,7 +63,7 @@ export class AppService {
       relations: ['themes', 'artworks', 'platforms'],
       where: {
         platforms: {
-          name: 'Mac',
+          slug: 'win',
         },
       },
     });

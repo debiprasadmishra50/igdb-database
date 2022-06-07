@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -34,7 +35,8 @@ export class ReleaseDates {
   @Column({ nullable: true })
   m: number;
 
-  @ManyToOne(() => Platforms, { nullable: true })
+  @ManyToMany(() => Platforms, { nullable: true })
+  @JoinTable()
   platform: Platforms;
 
   @Column({ nullable: true })
