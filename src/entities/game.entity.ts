@@ -68,7 +68,7 @@ export class Game {
   @Column({ nullable: true })
   created_at: number;
 
-  // TODO: dlcs, expanded_games, expansions
+  // TODO: expanded_games, expansions
   @ManyToMany(() => Game, { nullable: true })
   @JoinTable()
   dlcs: number[];

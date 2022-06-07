@@ -59,13 +59,15 @@ export class AppService {
     console.log('getting games...');
     // return await this.gameRepository.find();
     const data = await this.gameRepository.find({
-      select: ['id', 'name', 'themes'],
-      relations: ['themes'],
-
-      // where: {
-      //   id: 624,
-      // },
+      select: ['id', 'name', 'slug', 'themes', 'artworks', 'platforms'],
+      relations: ['themes', 'artworks', 'platforms'],
+      where: {
+        platforms: {
+          name: 'Mac',
+        },
+      },
     });
+
     return data;
     // return await data[0].platforms;
   }
