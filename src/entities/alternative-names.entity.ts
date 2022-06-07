@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Game } from './game.entity';
 
 @Entity()
@@ -19,6 +19,6 @@ export class AlternativeNames {
   @Column({ nullable: true })
   name: string;
 
-  @ManyToOne(() => Game, (game) => game.alternative_names)
+  @ManyToMany(() => Game, (game) => game.alternative_names)
   game: number;
 }

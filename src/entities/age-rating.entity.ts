@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Game } from './game.entity';
 
 @Entity()
@@ -19,6 +19,6 @@ export class AgeRating {
   @Column({ nullable: true })
   rating: number;
 
-  @ManyToOne(() => Game, (game) => game.age_ratings)
+  @ManyToMany(() => Game, (game) => game.age_ratings)
   game: number;
 }

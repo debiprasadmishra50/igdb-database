@@ -1,4 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { Game } from './game.entity';
 import { Platforms } from './platforms.entity';
 
@@ -16,7 +25,7 @@ export class ReleaseDates {
   @Column({ nullable: true })
   date: number;
 
-  @ManyToOne(() => Game, (game) => game.release_dates)
+  @ManyToMany(() => Game, (game) => game.release_dates)
   game: Game;
 
   @Column({ nullable: true })

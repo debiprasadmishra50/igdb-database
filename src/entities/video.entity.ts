@@ -1,4 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { Game } from './game.entity';
 
 @Entity()
@@ -12,6 +21,6 @@ export class Video {
   @Column({ nullable: true })
   video_id: string;
 
-  @ManyToOne(() => Game, (game) => game.release_dates)
+  @ManyToMany(() => Game, (game) => game.release_dates)
   game: Game;
 }

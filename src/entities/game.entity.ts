@@ -33,7 +33,8 @@ export class Game {
   @PrimaryColumn({})
   id: number;
 
-  @OneToMany(() => AgeRating, (rating) => rating.game, { nullable: true })
+  @ManyToMany(() => AgeRating, (rating) => rating.game, { nullable: true })
+  @JoinTable()
   age_ratings: AgeRating[];
 
   @Column('decimal', { nullable: true })
@@ -42,10 +43,12 @@ export class Game {
   @Column({ nullable: true })
   aggregated_rating_count: number;
 
-  @OneToMany(() => AlternativeNames, (names) => names.game, { nullable: true })
+  @ManyToMany(() => AlternativeNames, (names) => names.game, { nullable: true })
+  @JoinTable()
   alternative_names: AlternativeNames[];
 
-  @OneToMany(() => ArtWorks, (work) => work.game, { nullable: true })
+  @ManyToMany(() => ArtWorks, (work) => work.game, { nullable: true })
+  @JoinTable()
   artworks: ArtWorks[];
 
   @ManyToMany(() => Game, { nullable: true })
@@ -73,7 +76,8 @@ export class Game {
   @Column('int', { array: true, nullable: true })
   dlcsId: number[];
 
-  @OneToMany(() => ExternalGames, (exGames) => exGames.game, { nullable: true })
+  @ManyToMany(() => ExternalGames, (exGames) => exGames.game, { nullable: true })
+  @JoinTable()
   external_games: ExternalGames[];
 
   @Column({ nullable: true })
@@ -85,22 +89,27 @@ export class Game {
   @ManyToOne(() => Franchises, { nullable: true })
   franchise: Franchises;
 
-  @OneToMany(() => Franchises, (franchises) => franchises.game, { nullable: true })
+  @ManyToMany(() => Franchises, (franchises) => franchises.game, { nullable: true })
+  @JoinTable()
   franchises: Franchises[];
 
-  @OneToMany(() => GameEngines, (gameEngine) => gameEngine.game, { nullable: true })
+  @ManyToMany(() => GameEngines, (gameEngine) => gameEngine.game, { nullable: true })
+  @JoinTable()
   game_engines: GameEngines[];
 
-  @OneToMany(() => GameModes, (gameModes) => gameModes.game, { nullable: true })
+  @ManyToMany(() => GameModes, (gameModes) => gameModes.game, { nullable: true })
+  @JoinTable()
   game_modes: GameModes[];
 
-  @OneToMany(() => Genres, (genres) => genres.game, { nullable: true })
+  @ManyToMany(() => Genres, (genres) => genres.game, { nullable: true })
+  @JoinTable()
   genres: Genres[];
 
   @Column({ nullable: true })
   hypes: number;
 
-  @OneToMany(() => InvolvedCompanies, (inCompanies) => inCompanies.game, { nullable: true })
+  @ManyToMany(() => InvolvedCompanies, (inCompanies) => inCompanies.game, { nullable: true })
+  @JoinTable()
   involved_companies: InvolvedCompanies[];
 
   // multiplayer_modes
@@ -113,10 +122,12 @@ export class Game {
   @ManyToOne(() => Game, { nullable: true, createForeignKeyConstraints: false })
   parent_game: number;
 
-  @OneToMany(() => Platforms, (platform) => platform.game, { nullable: true })
+  @ManyToMany(() => Platforms, (platform) => platform.game, { nullable: true })
+  @JoinTable()
   platforms: Platforms[];
 
-  @OneToMany(() => PlayerPerspectives, (player) => player.game, { nullable: true })
+  @ManyToMany(() => PlayerPerspectives, (player) => player.game, { nullable: true })
+  @JoinTable()
   player_perspectives: PlayerPerspectives[];
 
   @Column('decimal', { nullable: true })
@@ -125,7 +136,8 @@ export class Game {
   @Column({ nullable: true })
   rating_count: number;
 
-  @OneToMany(() => ReleaseDates, (releaseDate) => releaseDate.game, { nullable: true })
+  @ManyToMany(() => ReleaseDates, (releaseDate) => releaseDate.game, { nullable: true })
+  @JoinTable()
   release_dates: ReleaseDates[];
 
   // remakes, remasters
@@ -151,7 +163,8 @@ export class Game {
   @Column({ nullable: true })
   summary: string;
 
-  @OneToMany(() => Themes, (themes) => themes.game, { nullable: true })
+  @ManyToMany(() => Themes, (themes) => themes.game, { nullable: true })
+  @JoinTable()
   themes: Themes[];
 
   @Column('decimal', { nullable: true })
@@ -166,9 +179,11 @@ export class Game {
   @Column({ nullable: true })
   url: string;
 
-  @OneToMany(() => Video, (video) => video.game, { nullable: true })
+  @ManyToMany(() => Video, (video) => video.game, { nullable: true })
+  @JoinTable()
   videos: Video[];
 
-  @OneToMany(() => Website, (website) => website.game, { nullable: true })
+  @ManyToMany(() => Website, (website) => website.game, { nullable: true })
+  @JoinTable()
   websites: Website[];
 }

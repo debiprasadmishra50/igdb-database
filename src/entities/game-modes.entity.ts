@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { Game } from './game.entity';
 
 @Entity()
@@ -9,7 +9,7 @@ export class GameModes {
   @Column({ nullable: true })
   created_at: number;
 
-  @ManyToOne(() => Game, (game) => game.game_modes)
+  @ManyToMany(() => Game, (game) => game.game_modes)
   game: Game;
 
   @Column({ nullable: true })

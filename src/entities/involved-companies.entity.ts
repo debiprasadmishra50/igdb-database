@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Game } from './game.entity';
 
 @Entity()
@@ -15,7 +15,7 @@ export class InvolvedCompanies {
   @Column({ nullable: true })
   developer: boolean;
 
-  @ManyToOne(() => Game, (game) => game.involved_companies)
+  @ManyToMany(() => Game, (game) => game.involved_companies)
   game: Game;
 
   @Column({ nullable: true })

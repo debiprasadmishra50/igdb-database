@@ -59,8 +59,8 @@ export class AppService {
     console.log('getting games...');
     // return await this.gameRepository.find();
     const data = await this.gameRepository.find({
-      select: ['age_ratings', 'platforms', 'release_dates'],
-      relations: ['age_ratings', 'platforms', 'release_dates'],
+      select: ['id', 'name', 'themes'],
+      relations: ['themes'],
 
       // where: {
       //   id: 624,
@@ -73,10 +73,11 @@ export class AppService {
   async addIGDBGamesData() {
     const records = this.readDirectory();
 
-    for (let i = 0; i < 10; i++) {
-      // const filePath = `${this.path}/${records[i]}`;
-      const filePath = `${this.path}/${records[this.random(0, records.length)]}`;
+    for (let i = 0; i < 100; i++) {
+      const filePath = `${this.path}/${records[i]}`;
+      // const filePath = `${this.path}/${records[this.random(0, records.length)]}`;
       // const filePath = `${this.path}/call-of-duty-united-offensive.json`;
+      // const filePath = `${this.path}/victoria-ii-heart-of-darkness.json`;
       let data = this.readFile(filePath);
       data = JSON.parse(data);
 
@@ -119,6 +120,7 @@ export class AppService {
 
       if (data['collection']) game.collection = await this.addCollection(data['collection']);
       if (data['cover']) game.cover = await this.addCover(data['cover']);
+
       if (data['dlcs']) game.dlcsId = data['dlcs'].map((d) => d.id);
 
       if (data['external_games']) {
@@ -157,7 +159,6 @@ export class AppService {
         // TODO: parent_game
         game.parent_game = data['parent_game'];
 
-      await this.wait(0.1);
       if (data['platforms']) {
         game.platforms = await this.addPlatforms(data['platforms'], game);
       }
@@ -196,12 +197,11 @@ export class AppService {
     }
 
     await this.wait(2);
-    console.log('awesome: ', (await this.gameRepository.find()).length);
+    // console.log('awesome: ', await this.gameRepository.find());
+    console.log('awesome: ', await this.gameRepository.count());
     // global.gc();
     // const g = await this.gameRepository.findOne({ where: { id: 624 } });
     // console.log(await g.similar_games);
-
-    return (await this.gameRepository.find()).length;
   }
 
   async addVideos(data: any[]) {
@@ -343,9 +343,13 @@ export class AppService {
       return this.platformsRepository.save(platform);
     });
 
-    const platforms = await Promise.all(allPlatforms);
+    try {
+      return await Promise.all(allPlatforms);
+    } catch (err) {
+      console.log(err);
+    }
 
-    return platforms;
+    // return platforms;
   }
 
   async addInvolvedCompanies(data: any[]) {
