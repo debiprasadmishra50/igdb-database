@@ -16,7 +16,7 @@ export class ReleaseDates {
   @Column({ nullable: true })
   date: number;
 
-  @ManyToOne(() => Game, (game) => game.release_dates, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.release_dates)
   game: Game;
 
   @Column({ nullable: true })
@@ -25,7 +25,7 @@ export class ReleaseDates {
   @Column({ nullable: true })
   m: number;
 
-  @ManyToOne(() => Platforms, { nullable: true, lazy: true })
+  @ManyToOne(() => Platforms, { nullable: true })
   platform: Platforms;
 
   @Column({ nullable: true })

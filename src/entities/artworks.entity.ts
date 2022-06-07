@@ -6,7 +6,7 @@ export class ArtWorks {
   @PrimaryColumn()
   id: number;
 
-  @ManyToOne(() => Game, (game) => game.release_dates, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.release_dates)
   game: Game;
 
   @Column({ nullable: true })

@@ -15,6 +15,6 @@ export class Photo {
   @Column({ nullable: true })
   url: string;
 
-  @ManyToOne(() => User, (user) => user.photos, { lazy: true })
+  @ManyToOne(() => User, (user) => user.photos)
   user: number;
 }

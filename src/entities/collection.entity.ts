@@ -9,7 +9,7 @@ export class Collection {
   @Column({ nullable: true })
   created_at: number;
 
-  @OneToMany(() => Game, (game) => game.collection, { lazy: true })
+  @OneToMany(() => Game, (game) => game.collection)
   games: number[];
 
   @Column({ nullable: true })

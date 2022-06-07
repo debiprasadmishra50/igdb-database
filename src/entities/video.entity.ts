@@ -12,6 +12,6 @@ export class Video {
   @Column({ nullable: true })
   video_id: string;
 
-  @ManyToOne(() => Game, (game) => game.release_dates, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.release_dates)
   game: Game;
 }

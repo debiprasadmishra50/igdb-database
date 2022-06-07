@@ -19,7 +19,7 @@ export class Themes {
   @Column({ nullable: true })
   updated_at: number;
 
-  @ManyToOne(() => Game, (game) => game.release_dates, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.release_dates)
   game: Game;
 
   @Column({ nullable: true })

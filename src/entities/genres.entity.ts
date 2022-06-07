@@ -9,7 +9,7 @@ export class Genres {
   @Column({ nullable: true })
   created_at: number;
 
-  @ManyToOne(() => Game, (game) => game.genres, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.genres)
   game: Game;
 
   @Column({ nullable: true })

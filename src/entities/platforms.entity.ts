@@ -18,7 +18,7 @@ export class Platforms {
   @Column({ nullable: true })
   created_at: number;
 
-  @ManyToOne(() => Game, (game) => game.platforms, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.platforms)
   game: Game;
 
   @Column({ nullable: true })

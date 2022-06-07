@@ -46,7 +46,7 @@ import { User } from './test/user.entity';
           autoLoadEntities: true,
           synchronize: true,
           retryAttempts: 2,
-          // dropSchema: true,
+          dropSchema: true,
         };
       },
     }),

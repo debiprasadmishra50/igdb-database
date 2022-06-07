@@ -55,16 +55,32 @@ export class AppService {
     @InjectRepository(Website) private readonly websiteRepository: Repository<Website>,
   ) {}
 
+  async getGames() {
+    console.log('getting games...');
+    // return await this.gameRepository.find();
+    const data = await this.gameRepository.find({
+      select: ['age_ratings', 'platforms', 'release_dates'],
+      relations: ['age_ratings', 'platforms', 'release_dates'],
+
+      // where: {
+      //   id: 624,
+      // },
+    });
+    return data;
+    // return await data[0].platforms;
+  }
+
   async addIGDBGamesData() {
     const records = this.readDirectory();
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 10; i++) {
+      // const filePath = `${this.path}/${records[i]}`;
       const filePath = `${this.path}/${records[this.random(0, records.length)]}`;
       // const filePath = `${this.path}/call-of-duty-united-offensive.json`;
       let data = this.readFile(filePath);
       data = JSON.parse(data);
 
-      console.log('//////////////////////', data['id'], '///////////////////');
+      console.log('[+] Game Id:', data['id']);
 
       const game = new Game();
       game.id = data['id'];
@@ -141,12 +157,13 @@ export class AppService {
         // TODO: parent_game
         game.parent_game = data['parent_game'];
 
+      await this.wait(0.1);
       if (data['platforms']) {
-        game.platforms = await this.addPlatforms(data['platforms']);
+        game.platforms = await this.addPlatforms(data['platforms'], game);
       }
 
       if (data['player_perspectives']) {
-        game.player_perspectives = await this.addPlayerPerspective(data['player_perspectives']);
+        game.player_perspectives = await this.addPlayerPerspective(data['player_perspectives'], game);
       }
 
       if (data['release_dates']) {
@@ -174,6 +191,7 @@ export class AppService {
         game.websites = await this.addWebsites(data['websites']);
       }
 
+      await this.wait(0.1);
       await this.gameRepository.save(game);
     }
 
@@ -287,7 +305,7 @@ export class AppService {
     return await Promise.all(allDates);
   }
 
-  async addPlayerPerspective(data: any[]) {
+  async addPlayerPerspective(data: any[], game: Game) {
     const allPerspectives = data.map((el) => {
       const player = new PlayerPerspectives();
       player.id = el.id;
@@ -297,13 +315,15 @@ export class AppService {
       player.updated_at = el.updated_at;
       player.url = el.url;
 
+      player.game = game;
+
       return this.playerRepository.save(player);
     });
 
     return await Promise.all(allPerspectives);
   }
 
-  async addPlatforms(data: any[]) {
+  async addPlatforms(data: any[], game: Game) {
     const allPlatforms = data.map((el) => {
       const platform = new Platforms();
       platform.id = el.id;
@@ -318,11 +338,14 @@ export class AppService {
       platform.url = el.url;
       platform.versions = el.versions;
       platform.websites = el.websites;
+      platform.game = game;
 
       return this.platformsRepository.save(platform);
     });
 
-    return await Promise.all(allPlatforms);
+    const platforms = await Promise.all(allPlatforms);
+
+    return platforms;
   }
 
   async addInvolvedCompanies(data: any[]) {
@@ -413,9 +436,13 @@ export class AppService {
       return this.franchisesRepository.save(fr);
     });
 
-    const franchisesData = await Promise.all(allFranchises);
+    try {
+      return await Promise.all(allFranchises);
+    } catch (err) {
+      console.error(err.query, err.detail);
+    }
 
-    return franchisesData;
+    // return franchisesData;
   }
 
   async addExternalGames(data: any[]) {

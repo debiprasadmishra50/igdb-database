@@ -12,7 +12,7 @@ export class Franchises {
   @Column('integer', { array: true })
   games: number[];
 
-  @ManyToOne(() => Game, (game) => game.franchises, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.franchises)
   game: Game;
 
   @Column({ nullable: true })

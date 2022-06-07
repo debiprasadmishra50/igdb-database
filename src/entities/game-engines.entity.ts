@@ -13,7 +13,7 @@ export class GameEngines {
   @Column('int', { nullable: true, array: true })
   companies: number[];
 
-  @ManyToOne(() => Game, (game) => game.game_engines, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.game_engines)
   game: Game;
 
   @Column({ nullable: true })

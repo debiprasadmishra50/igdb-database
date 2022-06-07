@@ -12,7 +12,7 @@ export class Cover {
   @Column({ nullable: true })
   animated: boolean;
 
-  @OneToOne(() => Game, (game) => game.cover, { lazy: true })
+  @OneToOne(() => Game, (game) => game.cover)
   game: Game;
 
   @Column({ nullable: true })

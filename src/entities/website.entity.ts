@@ -12,7 +12,7 @@ export class Website {
   @Column({ nullable: true })
   trusted: boolean;
 
-  @ManyToOne(() => Game, (game) => game.release_dates, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.release_dates)
   game: Game;
 
   @Column({ nullable: true })

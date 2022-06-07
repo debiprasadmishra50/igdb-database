@@ -15,7 +15,7 @@ export class InvolvedCompanies {
   @Column({ nullable: true })
   developer: boolean;
 
-  @ManyToOne(() => Game, (game) => game.involved_companies, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.involved_companies)
   game: Game;
 
   @Column({ nullable: true })

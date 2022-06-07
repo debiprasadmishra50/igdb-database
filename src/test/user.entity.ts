@@ -25,7 +25,7 @@ export class User {
   @Column({ nullable: true })
   name: string;
 
-  @OneToMany(() => Photo, (photo) => photo.user, { eager: true })
+  @OneToMany(() => Photo, (photo) => photo.user)
   // @JoinColumn()
   photos: Photo[];
   // @Column('int', { array: true })

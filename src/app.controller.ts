@@ -11,6 +11,11 @@ export class AppController {
 
   @Get('games')
   async getGames() {
-    return await this.appService.addIGDBGamesData();
+    const data = await this.appService.getGames();
+    return {
+      status: 'success',
+      results: data.length,
+      data,
+    };
   }
 }

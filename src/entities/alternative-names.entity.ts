@@ -19,6 +19,6 @@ export class AlternativeNames {
   @Column({ nullable: true })
   name: string;
 
-  @ManyToOne(() => Game, (game) => game.alternative_names, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.alternative_names)
   game: number;
 }

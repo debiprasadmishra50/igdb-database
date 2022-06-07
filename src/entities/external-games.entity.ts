@@ -12,7 +12,7 @@ export class ExternalGames {
   @Column({ nullable: true })
   created_at: number;
 
-  @ManyToOne(() => Game, (game) => game.external_games, { lazy: true })
+  @ManyToOne(() => Game, (game) => game.external_games)
   game: Game;
 
   @Column({ nullable: true })

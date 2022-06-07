@@ -33,7 +33,7 @@ export class Game {
   @PrimaryColumn({})
   id: number;
 
-  @OneToMany(() => AgeRating, (rating) => rating.game, { nullable: true, eager: true })
+  @OneToMany(() => AgeRating, (rating) => rating.game, { nullable: true })
   age_ratings: AgeRating[];
 
   @Column('decimal', { nullable: true })
@@ -42,23 +42,23 @@ export class Game {
   @Column({ nullable: true })
   aggregated_rating_count: number;
 
-  @OneToMany(() => AlternativeNames, (names) => names.game, { nullable: true, eager: true })
+  @OneToMany(() => AlternativeNames, (names) => names.game, { nullable: true })
   alternative_names: AlternativeNames[];
 
-  @OneToMany(() => ArtWorks, (work) => work.game, { nullable: true, eager: true })
+  @OneToMany(() => ArtWorks, (work) => work.game, { nullable: true })
   artworks: ArtWorks[];
 
-  @ManyToMany(() => Game, { nullable: true, lazy: true })
+  @ManyToMany(() => Game, { nullable: true })
   @JoinTable()
   bundles: number[];
 
   @Column({ nullable: true })
   category: number;
 
-  @ManyToOne(() => Collection, (collection) => collection.games, { eager: true })
+  @ManyToOne(() => Collection, (collection) => collection.games)
   collection: Collection;
 
-  @OneToOne(() => Cover, (cover) => cover.game, { nullable: true, eager: true })
+  @OneToOne(() => Cover, (cover) => cover.game, { nullable: true })
   @JoinColumn()
   cover: Cover;
 
@@ -66,14 +66,14 @@ export class Game {
   created_at: number;
 
   // TODO: dlcs, expanded_games, expansions
-  @ManyToMany(() => Game, { nullable: true, lazy: true })
+  @ManyToMany(() => Game, { nullable: true })
   @JoinTable()
   dlcs: number[];
 
   @Column('int', { array: true, nullable: true })
   dlcsId: number[];
 
-  @OneToMany(() => ExternalGames, (exGames) => exGames.game, { nullable: true, eager: true })
+  @OneToMany(() => ExternalGames, (exGames) => exGames.game, { nullable: true })
   external_games: ExternalGames[];
 
   @Column({ nullable: true })
@@ -82,25 +82,25 @@ export class Game {
   @Column({ nullable: true })
   follows: number;
 
-  @ManyToOne(() => Franchises, { nullable: true, eager: true })
+  @ManyToOne(() => Franchises, { nullable: true })
   franchise: Franchises;
 
-  @OneToMany(() => Franchises, (franchises) => franchises.game, { nullable: true, eager: true })
+  @OneToMany(() => Franchises, (franchises) => franchises.game, { nullable: true })
   franchises: Franchises[];
 
-  @OneToMany(() => GameEngines, (gameEngine) => gameEngine.game, { nullable: true, eager: true })
+  @OneToMany(() => GameEngines, (gameEngine) => gameEngine.game, { nullable: true })
   game_engines: GameEngines[];
 
-  @OneToMany(() => GameModes, (gameModes) => gameModes.game, { nullable: true, eager: true })
+  @OneToMany(() => GameModes, (gameModes) => gameModes.game, { nullable: true })
   game_modes: GameModes[];
 
-  @OneToMany(() => Genres, (genres) => genres.game, { nullable: true, eager: true })
+  @OneToMany(() => Genres, (genres) => genres.game, { nullable: true })
   genres: Genres[];
 
   @Column({ nullable: true })
   hypes: number;
 
-  @OneToMany(() => InvolvedCompanies, (inCompanies) => inCompanies.game, { nullable: true, eager: true })
+  @OneToMany(() => InvolvedCompanies, (inCompanies) => inCompanies.game, { nullable: true })
   involved_companies: InvolvedCompanies[];
 
   // multiplayer_modes
@@ -110,13 +110,13 @@ export class Game {
   @Column({ nullable: true })
   name: string;
 
-  @ManyToOne(() => Game, { nullable: true, lazy: true, createForeignKeyConstraints: false })
+  @ManyToOne(() => Game, { nullable: true, createForeignKeyConstraints: false })
   parent_game: number;
 
-  @OneToMany(() => Platforms, (platform) => platform.game, { nullable: true, eager: true })
+  @OneToMany(() => Platforms, (platform) => platform.game, { nullable: true })
   platforms: Platforms[];
 
-  @OneToMany(() => PlayerPerspectives, (player) => player.game, { nullable: true, eager: true })
+  @OneToMany(() => PlayerPerspectives, (player) => player.game, { nullable: true })
   player_perspectives: PlayerPerspectives[];
 
   @Column('decimal', { nullable: true })
@@ -125,15 +125,15 @@ export class Game {
   @Column({ nullable: true })
   rating_count: number;
 
-  @OneToMany(() => ReleaseDates, (releaseDate) => releaseDate.game, { nullable: true, eager: true })
+  @OneToMany(() => ReleaseDates, (releaseDate) => releaseDate.game, { nullable: true })
   release_dates: ReleaseDates[];
 
   // remakes, remasters
 
-  @OneToMany(() => Screenshots, (shots) => shots.game, { nullable: true, eager: true })
+  @OneToMany(() => Screenshots, (shots) => shots.game, { nullable: true })
   screenshots: Screenshots[];
 
-  @ManyToMany(() => Game, { nullable: true, lazy: true })
+  @ManyToMany(() => Game, { nullable: true })
   @JoinTable()
   similar_games: number[];
 
@@ -151,7 +151,7 @@ export class Game {
   @Column({ nullable: true })
   summary: string;
 
-  @OneToMany(() => Themes, (themes) => themes.game, { nullable: true, eager: true })
+  @OneToMany(() => Themes, (themes) => themes.game, { nullable: true })
   themes: Themes[];
 
   @Column('decimal', { nullable: true })
@@ -166,9 +166,9 @@ export class Game {
   @Column({ nullable: true })
   url: string;
 
-  @OneToMany(() => Video, (video) => video.game, { nullable: true, eager: true })
+  @OneToMany(() => Video, (video) => video.game, { nullable: true })
   videos: Video[];
 
-  @OneToMany(() => Website, (website) => website.game, { nullable: true, eager: true })
+  @OneToMany(() => Website, (website) => website.game, { nullable: true })
   websites: Website[];
 }
