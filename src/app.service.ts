@@ -155,9 +155,7 @@ export class AppService {
         game.multiplayer_modes = data['multiplayer_modes'].map((mode) => mode.id);
       }
 
-      if (data['parent_game'])
-        // TODO: parent_game
-        game.parent_game = data['parent_game'];
+      if (data['parent_game']) game.parent_game = data['parent_game'];
 
       if (data['platforms']) {
         game.platforms = await this.addPlatforms(data['platforms'], game);
@@ -175,7 +173,6 @@ export class AppService {
         game.screenshots = await this.addScreenshots(data['screenshots']);
       }
 
-      // TODO: similar games
       if (data['similar_games']) {
         game.similar_games = data['similar_games'].map((game) => game.id);
       }
